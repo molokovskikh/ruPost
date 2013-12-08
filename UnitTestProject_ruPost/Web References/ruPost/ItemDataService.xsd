@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://fclient.russianpost.org/postserver" xmlns:nsfc="http://fclient.russianpost.org" targetNamespace="http://fclient.russianpost.org/postserver" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://vfc.russianpost.ru:8080/FederalClient/ItemDataService?xsd=1" namespace="http://fclient.russianpost.org" />
+  <xs:element name="answerByTicketRequest" type="tns:answerByTicketRequest" />
+  <xs:element name="answerByTicketResponse" type="tns:answerByTicketResponse" />
+  <xs:element name="ticketRequest" type="tns:ticketRequest" />
+  <xs:element name="ticketResponse" type="tns:ticketResponse" />
+  <xs:complexType name="ticketRequest">
+    <xs:sequence>
+      <xs:element name="request" type="nsfc:file" />
+      <xs:element name="login" type="xs:string" />
+      <xs:element name="password" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" default="RUS" name="language" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LanguageData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="Language">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string" />
+            <xs:attribute name="code" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ticketResponse">
+    <xs:choice>
+      <xs:element name="value" type="xs:string" />
+      <xs:element name="error" type="nsfc:error" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="answerByTicketRequest">
+    <xs:sequence>
+      <xs:element name="ticket" type="xs:string" />
+      <xs:element name="login" type="xs:string" />
+      <xs:element name="password" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="answerByTicketResponse">
+    <xs:choice>
+      <xs:element name="value" type="nsfc:file" />
+      <xs:element name="error" type="nsfc:error" />
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

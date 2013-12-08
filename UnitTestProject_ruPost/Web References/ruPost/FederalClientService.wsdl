@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:fcpsns="http://fclient.russianpost.org/postserver" xmlns:tns="http://fclient.russianpost.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="FederalClientService" targetNamespace="http://fclient.russianpost.org" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <plnk:partnerLinkType name="FederalClient">
+    <plnk:role name="ItemMessageProducer" portType="tns:FederalClient" />
+  </plnk:partnerLinkType>
+  <types>
+    <xs:schema>
+      <xs:import schemaLocation="http://vfc.russianpost.ru:8080/FederalClient/ItemDataService?xsd=2" namespace="http://fclient.russianpost.org/postserver" />
+    </xs:schema>
+  </types>
+  <message name="ticketRequest">
+    <part name="parameters" element="fcpsns:ticketRequest" />
+  </message>
+  <message name="ticketResponse">
+    <part name="parameters" element="fcpsns:ticketResponse" />
+  </message>
+  <message name="answerByTicketRequest">
+    <part name="parameters" element="fcpsns:answerByTicketRequest" />
+  </message>
+  <message name="answerByTicketResponse">
+    <part name="parameters" element="fcpsns:answerByTicketResponse" />
+  </message>
+  <portType name="FederalClient">
+    <operation name="getTicket">
+      <input message="tns:ticketRequest" />
+      <output message="tns:ticketResponse" />
+    </operation>
+    <operation name="getResponseByTicket">
+      <input message="tns:answerByTicketRequest" />
+      <output message="tns:answerByTicketResponse" />
+    </operation>
+  </portType>
+  <binding name="FederalClientPortBinding" type="tns:FederalClient">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="getTicket">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getResponseByTicket">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ItemDataService">
+    <port name="ItemDataServicePort" binding="tns:FederalClientPortBinding">
+      <soap:address location="http://vfc.russianpost.ru:8080/FederalClient/ItemDataService" />
+    </port>
+  </service>
+</definitions>

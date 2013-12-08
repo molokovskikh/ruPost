@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://fclient.russianpost.org" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://fclient.russianpost.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="fileName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{10,12}(_)[0-9]+(_)[0-9]{8}(_)[0-9]{4}(_((Out)|(In))\.xml)" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fileType">
+    <xs:restriction base="xs:positiveInteger" />
+  </xs:simpleType>
+  <xs:simpleType name="barcode">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="13" />
+      <xs:maxLength value="14" />
+      <xs:pattern value="([0-9]{14,14})|([a-z,A-Z]{2,2}[0-9]{9,9}[a-z,A-Z]{2,2})" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="date">
+    <xs:restriction base="xs:string">
+      <xs:length value="19" />
+      <xs:pattern value="([0-3][0-9]\.[0-1][0-9]\.[0-9]{4,4}[ ][0-2]?[0-9][:][0-5][0-9][:][0-5][0-9])|([0-3][0-9]\.[0-1][0-9]\.[0-9]{4,4})" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="index">
+    <xs:restriction base="xs:string">
+      <xs:length value="6" />
+      <xs:pattern value="[0-9]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="file">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Item" type="tns:item" />
+    </xs:sequence>
+    <xs:attribute name="FileName" type="tns:fileName" use="required">
+      <xs:annotation>
+        <xs:documentation>
+                    Этот метод не используется.                    
+                </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="FileTypeID" type="tns:fileType" use="required" />
+    <xs:attribute name="FileNumber" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="SenderID" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="RecipientID" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="DatePreparation" type="tns:date" use="required" />
+  </xs:complexType>
+  <xs:complexType name="item">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Operation" type="tns:operation" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:error" />
+    </xs:sequence>
+    <xs:attribute name="Barcode" type="tns:barcode" use="required" />
+  </xs:complexType>
+  <xs:complexType name="operation">
+    <xs:attribute name="OperTypeID" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="OperCtgID" type="xs:nonNegativeInteger" use="required" />
+    <xs:attribute name="OperName" type="xs:string" use="required" />
+    <xs:attribute name="DateOper" type="tns:date" use="required" />
+    <xs:attribute name="IndexOper" type="tns:index" use="required" />
+  </xs:complexType>
+  <xs:complexType name="error">
+    <xs:attribute name="ErrorTypeID" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="ErrorName" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:element name="File" type="tns:file">
+    <xs:annotation>
+      <xs:documentation>
+                    Этот метод не используется.                    
+                </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>
